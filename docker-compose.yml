@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  dedanbot:
+    build: .
+    container_name: dedanbot
+    restart: unless-stopped
+    ports:
+      - "8501:8501"  # Streamlit dashboard
+      - "8080:8080"  # Health check API
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=UTC
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./config/.env:/app/.env:ro
+    networks:
+      - dedanbot-network
+    depends_on:
+      - redis
+      - ollama
+    command: python main.py --dashboard --balance 1000
+
+  redis:
+    image: redis:7-alpine
+    container_name: dedanbot-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dedanbot-network
+    command: redis-server --appendonly yes
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: dedanbot-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - dedanbot-network
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    command: ollama serve
+
+  nginx:
+    image: nginx:alpine
+    container_name: dedanbot-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - dedanbot-network
+    depends_on:
+      - dedanbot
+
+volumes:
+  redis_data:
+    driver: local
+  ollama_data:
+    driver: local
+
+networks:
+  dedanbot-network:
+    driver: bridge
