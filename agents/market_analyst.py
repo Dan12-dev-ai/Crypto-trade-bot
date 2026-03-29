@@ -1,5 +1,5 @@
 """
-DEDANBOT - Market Analyst Agent
+Crypto trade bot - Market Analyst Agent
 Technical analysis + FinRL-style reinforcement learning signals
 """
 
@@ -78,7 +78,7 @@ class MarketAnalystAgent:
             allow_delegation=False,
             llm=self.llm,
             tools=[],
-            system_template="""You are the Market Analyst Agent for DEDANBOT.
+            system_template="""You are the Market Analyst Agent for Crypto trade bot.
             
             Your core responsibilities:
             1. Perform comprehensive technical analysis across multiple timeframes

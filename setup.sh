@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DEDANBOT - Setup Script
+# Crypto trade bot - Setup Script
 # Ultimate Opportunistic Trading Agent
 
 set -e
@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}🤖 Starting DEDANBOT Setup...${NC}"
+echo -e "${BLUE}🤖 Starting Crypto trade bot Setup...${NC}"
 
 # Find suitable Python version (3.12 or 3.13)
 PYTHON_CMD=""

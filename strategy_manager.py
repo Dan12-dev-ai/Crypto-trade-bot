@@ -1,5 +1,5 @@
 """
-DEDANBOT - Strategy Manager
+Crypto trade bot - Strategy Manager
 Handles automatic strategy switching based on market conditions (ADX, ATR)
 """
 

@@ -1,5 +1,5 @@
 """
-DEDANBOT - Supervisor Agent
+Crypto trade bot - Supervisor Agent
 Orchestrates everything, decides when to act or pause
 """
 
@@ -115,7 +115,7 @@ class SupervisorAgent:
             allow_delegation=True,
             llm=self.llm,
             tools=[],
-            system_template="""You are the Trading Supervisor Agent for DEDANBOT.
+            system_template="""You are the Trading Supervisor Agent for Crypto trade bot.
             
             Your core responsibilities:
             1. Orchestrate all specialized trading agents
@@ -146,7 +146,7 @@ class SupervisorAgent:
     async def initialize(self, starting_balance: float) -> None:
         """Initialize the supervisor and all agents"""
         try:
-            self.logger.info("Initializing DEDANBOT Supervisor...")
+            self.logger.info("Initializing Crypto trade bot Supervisor...")
             
             # Initialize risk manager
             await risk_manager.initialize(starting_balance)
@@ -353,7 +353,7 @@ class SupervisorAgent:
             
             # Format message for LLM
             prompt = f"""
-            As the DEDANBOT Trading Supervisor, analyze the following market and system state to make a strategic decision.
+            As the Crypto trade bot Trading Supervisor, analyze the following market and system state to make a strategic decision.
             
             Current Context:
             {json.dumps(context, indent=2, default=str)}
@@ -377,7 +377,7 @@ class SupervisorAgent:
             
             # Get decision from LLM
             response = await self.llm.ainvoke([
-                SystemMessage(content="You are the DEDANBOT Trading Supervisor Agent."),
+                SystemMessage(content="You are the Crypto trade bot Trading Supervisor Agent."),
                 HumanMessage(content=prompt)
             ])
             

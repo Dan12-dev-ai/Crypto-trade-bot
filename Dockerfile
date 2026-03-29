@@ -1,4 +1,4 @@
-# DEDANBOT - Docker Configuration
+# Crypto trade bot - Docker Configuration
 # Ultimate Opportunistic Trading Agent
 
 FROM python:3.12-slim

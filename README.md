@@ -1,4 +1,4 @@
-# 🤖 DEDANBOT - Ultimate Opportunistic Trading Agent
+# 🤖 Crypto trade bot - Ultimate Opportunistic Trading Agent
 
 A production-ready, worldwide elite autonomous AI trading agent that works on both Crypto futures and Forex with zero human intervention after initial setup.
 
@@ -65,7 +65,7 @@ A production-ready, worldwide elite autonomous AI trading agent that works on bo
 ### 1. Clone & Setup
 ```bash
 git clone <repository-url>
-cd DEDANBOT
+cd Crypto-trade-bot
 
 # Create virtual environment
 python -m venv venv
@@ -119,7 +119,7 @@ python main.py --paper --balance 5000 --leverage 20 --goal "upscale 500 to 5000 
 docker-compose up -d
 
 # View logs
-docker-compose logs -f dedanbot
+docker-compose logs -f crypto_trade_bot
 
 # Stop
 docker-compose down
@@ -266,17 +266,17 @@ crewai_execution_timeout = 300  # seconds
 ### Development
 ```bash
 # Build image
-docker build -t dedanbot .
+docker build -t crypto_trade_bot .
 
 # Run container
 docker run -d \
-  --name dedanbot \
+  --name crypto_trade_bot \
   -p 8501:8501 \
   -p 8080:8080 \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/logs:/app/logs \
   -v $(pwd)/config/.env:/app/.env:ro \
-  dedanbot
+  crypto_trade_bot
 ```
 
 ### Production with Docker Compose
@@ -285,7 +285,7 @@ docker run -d \
 docker-compose up -d
 
 # Scale for high availability
-docker-compose up -d --scale dedanbot=3
+docker-compose up -d --scale crypto_trade_bot=3
 
 # Update services
 docker-compose pull
@@ -317,7 +317,7 @@ sudo apt install docker.io docker-compose git -y
 
 # 2. Clone repository
 git clone <repository-url>
-cd DEDANBOT
+cd Crypto trade bot
 
 # 3. Configure environment
 cp .env.example .env
@@ -427,14 +427,14 @@ python main.py --paper --dashboard 2>&1 | tee debug.log
 5. Open Pull Request
 
 ## ⚖️ Risk Warning
-Trading involves significant risk. DEDANBOT is provided as-is without any guarantees. Always start with a small balance or paper trading.
+Trading involves significant risk. Crypto trade bot is provided as-is without any guarantees. Always start with a small balance or paper trading.
 
 ## 📄 License
 MIT License. See LICENSE for details.
 
 ---
 
-**🚀 Ready to start your autonomous trading journey with DEDANBOT?**
+**🚀 Ready to start your autonomous trading journey with Crypto trade bot?**
 
 Paper trading command:
 ```bash

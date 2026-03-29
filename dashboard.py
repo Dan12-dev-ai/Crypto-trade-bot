@@ -1,5 +1,5 @@
 """
-DEDANBOT - Streamlit Dashboard
+Crypto trade bot - Streamlit Dashboard
 Beautiful, professional real-time trading dashboard
 """
 
@@ -33,7 +33,7 @@ except ImportError as e:
 
 # Configure page
 st.set_page_config(
-    page_title="DEDANBOT - Trading Dashboard",
+    page_title="Crypto trade bot - Trading Dashboard",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -119,7 +119,7 @@ class Dashboard:
     def run(self):
         """Run the dashboard"""
         # Header
-        st.markdown('<h1 class="main-header">🤖 DEDANBOT Trading Dashboard</h1>', unsafe_allow_html=True)
+        st.markdown('<h1 class="main-header">🤖 Crypto trade bot Trading Dashboard</h1>', unsafe_allow_html=True)
         
         # Sidebar
         self._render_sidebar()

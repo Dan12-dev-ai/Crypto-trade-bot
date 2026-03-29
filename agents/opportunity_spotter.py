@@ -1,5 +1,5 @@
 """
-DEDANBOT - Opportunity Spotter Agent
+Crypto trade bot - Opportunity Spotter Agent
 Detects news shocks, volatility spikes, sentiment explosions, on-chain anomalies, sudden breakouts
 """
 
@@ -125,7 +125,7 @@ class OpportunitySpotterAgent:
             allow_delegation=False,
             llm=self.llm,
             tools=[],
-            system_template="""You are the Opportunity Spotter Agent for DEDANBOT.
+            system_template="""You are the Opportunity Spotter Agent for Crypto trade bot.
             
             Your core responsibilities:
             1. Monitor news sources for market-moving events

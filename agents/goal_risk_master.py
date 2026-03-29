@@ -1,5 +1,5 @@
 """
-DEDANBOT - Goal & Risk Master Agent
+Crypto trade bot - Goal & Risk Master Agent
 Calculates daily targets, position sizes, and enforces strict risk rules
 """
 
@@ -74,7 +74,7 @@ class GoalRiskMasterAgent:
             allow_delegation=False,
             llm=self.llm,
             tools=[],
-            system_template="""You are the Goal & Risk Master Agent for DEDANBOT.
+            system_template="""You are the Goal & Risk Master Agent for Crypto trade bot.
             
             Your core responsibilities:
             1. Break down the user's goal into precise daily/weekly/monthly targets

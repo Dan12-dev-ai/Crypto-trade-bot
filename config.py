@@ -1,5 +1,5 @@
 """
-DEDANBOT - Configuration Management
+Crypto trade bot - Configuration Management
 Ultimate Opportunistic Trading Agent Configuration
 """
 

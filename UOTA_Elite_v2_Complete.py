@@ -1,8 +1,8 @@
 """
-🤖 DEDANBOT - Complete Single File Version
+🤖 Crypto trade bot - Complete Single File Version
 Ultimate Opportunistic Trading Agent - All-in-One Implementation
 
-This file contains the complete DEDANBOT trading system including:
+This file contains the complete Crypto trade bot trading system including:
 - Configuration management
 - Risk management system
 - Multi-agent architecture (CrewAI + LangGraph)
@@ -691,7 +691,7 @@ class TelegramAlerts:
             # Send startup message
             await self.send_alert(
                 "system",
-                "🤖 DEDANBOT Started",
+                "🤖 Crypto trade bot Started",
                 "Trading system is now online and monitoring markets.",
                 "medium"
             )
@@ -756,7 +756,7 @@ class TelegramAlerts:
     async def _cmd_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         """Handle /start command"""
         welcome_message = """
-🤖 *DEDANBOT Trading Bot*
+🤖 *Crypto trade bot Trading Bot*
 
 Welcome to your automated trading assistant!
 
@@ -806,7 +806,7 @@ Stay tuned for real-time trading alerts! 🚀
     async def _cmd_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         """Handle /help command"""
         help_message = """
-🤖 *DEDANBOT - Help*
+🤖 *Crypto trade bot - Help*
 
 *Commands:*
 /start - Welcome message
@@ -948,8 +948,8 @@ except ImportError:
 # MAIN ORCHESTRATION
 # ============================================================================
 
-class DEDANBOT:
-    """Main DEDANBOT trading system"""
+class Crypto trade bot:
+    """Main Crypto trade bot trading system"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -968,7 +968,7 @@ class DEDANBOT:
     async def initialize(self, starting_balance: float) -> None:
         """Initialize trading system"""
         try:
-            self.logger.info("🤖 Initializing DEDANBOT...")
+            self.logger.info("🤖 Initializing Crypto trade bot...")
             
             # Initialize components
             await self.risk_manager.initialize(starting_balance)
@@ -982,12 +982,12 @@ class DEDANBOT:
             # Send startup notification
             await self.telegram_alerts.send_alert(
                 "system",
-                "DEDANBOT Initialized",
+                "Crypto trade bot Initialized",
                 "System is ready to start trading",
                 "medium"
             )
             
-            self.logger.info("✅ DEDANBOT initialized successfully")
+            self.logger.info("✅ Crypto trade bot initialized successfully")
             
         except Exception as e:
             self.logger.error(f"❌ Error initializing system: {e}")
@@ -1065,7 +1065,7 @@ class DEDANBOT:
     async def stop(self) -> None:
         """Stop trading system gracefully"""
         try:
-            self.logger.info("🛑 Shutting down DEDANBOT...")
+            self.logger.info("🛑 Shutting down Crypto trade bot...")
             
             self.is_running = False
             
@@ -1087,13 +1087,13 @@ class DEDANBOT:
                 await self.telegram_alerts.send_alert(
                     "system",
                     "System Shutdown",
-                    "DEDANBOT has been shut down",
+                    "Crypto trade bot has been shut down",
                     "medium"
                 )
             except:
                 pass  # Telegram might already be stopped
                 
-            self.logger.info("✅ DEDANBOT shut down successfully")
+            self.logger.info("✅ Crypto trade bot shut down successfully")
             
         except Exception as e:
             self.logger.error(f"Error during shutdown: {e}")
@@ -1118,12 +1118,12 @@ def run_dashboard():
         return
         
     st.set_page_config(
-        page_title="DEDANBOT Dashboard",
+        page_title="Crypto trade bot Dashboard",
         page_icon="🤖",
         layout="wide"
     )
     
-    st.title("🤖 DEDANBOT Trading Dashboard")
+    st.title("🤖 Crypto trade bot Trading Dashboard")
     
     # Sidebar
     with st.sidebar:
@@ -1159,7 +1159,7 @@ def run_dashboard():
 
 async def main():
     """Main entry point"""
-    parser = argparse.ArgumentParser(description="DEDANBOT - Autonomous Trading Agent")
+    parser = argparse.ArgumentParser(description="Crypto trade bot - Autonomous Trading Agent")
     parser.add_argument("--balance", type=float, default=config.trading.starting_balance,
                        help="Starting balance for trading")
     parser.add_argument("--leverage", type=float, default=config.trading.max_leverage,
@@ -1185,12 +1185,12 @@ async def main():
             exchange_config.sandbox = True
             
     # Create and initialize system
-    dedanbot = DEDANBOT()
-    dedanbot.setup_signal_handlers()
+    crypto_trade_bot = Crypto trade bot()
+    crypto_trade_bot.setup_signal_handlers()
     
     try:
         # Initialize system
-        await dedanbot.initialize(args.balance)
+        await crypto_trade_bot.initialize(args.balance)
         
         # Start dashboard if requested
         if args.dashboard:
@@ -1200,7 +1200,7 @@ async def main():
             dashboard_thread.start()
             
         # Start trading
-        await dedanbot.start_trading()
+        await crypto_trade_bot.start_trading()
         
     except Exception as e:
         print(f"Error in main: {e}")

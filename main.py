@@ -1,5 +1,5 @@
 """
-DEDANBOT - Main Entry Point
+Crypto trade bot - Main Entry Point
 Ultimate Opportunistic Trading Agent - Autonomous Trading System
 """
 
@@ -36,15 +36,15 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('logs/dedanbot.log'),
+        logging.FileHandler('logs/crypto_trade_bot.log'),
         logging.StreamHandler(sys.stdout)
     ]
 )
 
 logger = logging.getLogger(__name__)
 
-class DEDANBOT:
-    """Main DEDANBOT trading system"""
+class Crypto trade bot:
+    """Main Crypto trade bot trading system"""
     
     def __init__(self):
         self.supervisor: Optional[SupervisorAgent] = None
@@ -57,7 +57,7 @@ class DEDANBOT:
     async def initialize(self, starting_balance: float) -> None:
         """Initialize the trading system"""
         try:
-            logger.info("🤖 Initializing DEDANBOT...")
+            logger.info("🤖 Initializing Crypto trade bot...")
             
             # Validate configuration
             config_errors = config.validate_config()
@@ -103,11 +103,11 @@ class DEDANBOT:
             # Send startup notification
             await telegram_alerts.send_system_alert(
                 "System Startup",
-                "DEDANBOT has been initialized and is ready to trade",
+                "Crypto trade bot has been initialized and is ready to trade",
                 "medium"
             )
             
-            logger.info("✅ DEDANBOT initialized successfully")
+            logger.info("✅ Crypto trade bot initialized successfully")
             
         except Exception as e:
             logger.error(f"❌ Error initializing system: {e}")
@@ -245,7 +245,7 @@ class DEDANBOT:
                     await database.cleanup_old_data(days_to_keep=90)
                     
                     # Backup database
-                    backup_path = f"data/backup/dedanbot_backup_{datetime.now().strftime('%Y%m%d')}.db"
+                    backup_path = f"data/backup/crypto_trade_bot_backup_{datetime.now().strftime('%Y%m%d')}.db"
                     await database.backup_database(backup_path)
                     
                     # Log daily reset
@@ -268,7 +268,7 @@ class DEDANBOT:
     async def stop(self) -> None:
         """Stop the trading system gracefully"""
         try:
-            logger.info("🛑 Shutting down DEDANBOT...")
+            logger.info("🛑 Shutting down Crypto trade bot...")
             
             self.is_running = False
             
@@ -294,7 +294,7 @@ class DEDANBOT:
             try:
                 await telegram_alerts.send_system_alert(
                     "System Shutdown",
-                    "DEDANBOT has been shut down",
+                    "Crypto trade bot has been shut down",
                     "medium"
                 )
             except:
@@ -307,7 +307,7 @@ class DEDANBOT:
                 message="System shutdown completed"
             ))
             
-            logger.info("✅ DEDANBOT shut down successfully")
+            logger.info("✅ Crypto trade bot shut down successfully")
             
         except Exception as e:
             logger.error(f"Error during shutdown: {e}")
@@ -350,7 +350,7 @@ async def run_dashboard():
 
 async def main():
     """Main entry point"""
-    parser = argparse.ArgumentParser(description="DEDANBOT - Autonomous Trading Agent")
+    parser = argparse.ArgumentParser(description="Crypto trade bot - Autonomous Trading Agent")
     parser.add_argument("--balance", type=float, default=config.trading.starting_balance,
                        help="Starting balance for trading")
     parser.add_argument("--leverage", type=float, default=config.trading.max_leverage,
@@ -379,14 +379,14 @@ async def main():
             exchange_config.testnet = True
             
     # Create and initialize system
-    dedanbot = DEDANBOT()
-    dedanbot.setup_signal_handlers()
+    crypto_trade_bot = Crypto trade bot()
+    crypto_trade_bot.setup_signal_handlers()
     
     dashboard_process = None
     
     try:
         # Initialize system
-        await dedanbot.initialize(args.balance)
+        await crypto_trade_bot.initialize(args.balance)
         
         # Start dashboard if requested
         if args.dashboard:
@@ -394,7 +394,7 @@ async def main():
             
         # Start trading
         if not args.backtest:
-            await dedanbot.start_trading()
+            await crypto_trade_bot.start_trading()
         else:
             logger.info("📈 Backtesting mode - running analysis...")
             # Implement backtesting logic here

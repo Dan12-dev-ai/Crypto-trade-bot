@@ -1,5 +1,5 @@
 """
-DEDANBOT - Executor Agent
+Crypto trade bot - Executor Agent
 Places orders with correct leverage, manages SL/TP/trailing stops
 """
 
@@ -113,7 +113,7 @@ class ExecutorAgent:
             allow_delegation=False,
             llm=self.llm,
             tools=[],
-            system_template="""You are the Trade Executor Agent for DEDANBOT.
+            system_template="""You are the Trade Executor Agent for Crypto trade bot.
             
             Your core responsibilities:
             1. Execute trades at optimal prices with minimal slippage

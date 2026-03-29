@@ -1,5 +1,5 @@
 """
-DEDANBOT - Telegram Alerts System
+Crypto trade bot - Telegram Alerts System
 Full Telegram integration with dedicated bot for real-time notifications
 """
 
@@ -111,7 +111,7 @@ class TelegramAlerts:
             # Send startup message
             await self.send_alert(
                 "system",
-                "🤖 DEDANBOT Started",
+                "🤖 Crypto trade bot Started",
                 "Trading system is now online and monitoring markets.",
                 "medium"
             )
@@ -435,7 +435,7 @@ class TelegramAlerts:
     async def _cmd_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         """Handle /start command"""
         welcome_message = """
-🤖 *DEDANBOT Trading Bot*
+🤖 *Crypto trade bot Trading Bot*
 
 Welcome to your automated trading assistant!
 
