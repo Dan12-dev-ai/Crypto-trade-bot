@@ -1,0 +1,28 @@
+# Environments
+.env
+config/.env
+config/..env.swp
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & Logs
+logs/
+data/*.db
+data/backup/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary files
+test_strategy_manager.py
+UOTA_Elite_v2_Complete.py
+debug.log
