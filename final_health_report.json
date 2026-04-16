@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-04-07T07:17:27.662411",
+  "overall_score": 45,
+  "grade": "D (NEEDS IMPROVEMENT)",
+  "ready_for_deployment": false,
+  "core_files": {
+    "core_files_checked": 8,
+    "missing_files": [],
+    "syntax_errors": [
+      "master_controller.py: invalid syntax (master_controller.py, line 60)",
+      "cloud_telegram_c2.py: invalid syntax (cloud_telegram_c2.py, line 215)",
+      "cloud_resilience.py: invalid syntax (cloud_resilience.py, line 266)"
+    ],
+    "files_valid": 5
+  },
+  "security": {
+    "env_file_exists": true,
+    "env_configured": true,
+    "telegram_configured": true,
+    "exness_configured": true,
+    "security_issues": []
+  },
+  "performance": {
+    "python_version": [
+      3,
+      13,
+      12,
+      "final",
+      0
+    ],
+    "python_compatible": true,
+    "requirements_installed": false,
+    "memory_available": true,
+    "disk_space": true,
+    "performance_issues": [
+      "Missing packages: ['crewai-tools', 'freqtrade', 'asyncio', 'aiogram', 'toml', 'cython', 'pywin32', 'prometheus-client', 'winshell', 'statsmodels', 'arch', 'opencv-python', 'asyncpg', 'ratelimit', 'pywin32', 'winshell', 'wmi', 'procfs', 'GPUtil', 'py-smbios']"
+    ]
+  },
+  "recommendations": [
+    "\ud83d\udd27 Fix remaining syntax errors",
+    "\ud83d\udce6 Install missing dependencies",
+    "\ud83d\udee1\ufe0f Complete security configuration",
+    "\ud83d\udcc1 Restore missing core files"
+  ]
+}

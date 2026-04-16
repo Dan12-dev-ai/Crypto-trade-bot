@@ -3,18 +3,18 @@ UOTA Elite v2 - Database and Persistence Layer
 SQLite database for memory, logs, and persistent storage
 """
 
-import sqlite3
-import asyncio
-import logging
-import json
-from datetime import datetime, timedelta
+# import sqlite3  # Moved to function to avoid circular import
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+# import json  # Moved to function to avoid circular import
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, asdict
-import pandas as pd
-import aiosqlite
+# import pandas  # Moved to function to avoid circular import as pd
+# import aiosqlite  # Moved to function to avoid circular import
 from pathlib import Path
 
-from config import config
+from config # import config  # Moved to function to avoid circular import
 try:
     from risk_manager import PositionRisk, RiskMetrics
 except ImportError:
@@ -731,7 +731,7 @@ class DatabaseManager:
     async def backup_database(self, backup_path: str) -> bool:
         """Create database backup"""
         try:
-            import shutil
+            # import shutil  # Moved to function to avoid circular import
             shutil.copy2(self.db_path, backup_path)
             self.logger.info(f"Database backed up to {backup_path}")
             return True

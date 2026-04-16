@@ -80,9 +80,8 @@ class DatabaseConfig:
 class ConfigManager:
     """Central configuration manager"""
     
-    def __init__(self, config_dir: str = "config"):
+    def __init__(self, config_dir: str = "."):
         self.config_dir = Path(config_dir)
-        self.config_dir.mkdir(exist_ok=True)
         self.config_file = self.config_dir / "config.json"
         self.env_file = self.config_dir / ".env"
         
@@ -182,9 +181,11 @@ class ConfigManager:
                 with open(self.env_file, 'r') as f:
                     for line in f:
                         line = line.strip()
-                        if line and not line.startswith('#'):
-                            key, value = line.split('=', 1)
-                            os.environ[key] = value
+                        if line and not line.startswith('#') and '=' in line:
+                            parts = line.split('=', 1)
+                            if len(parts) == 2:
+                                key, value = parts
+                                os.environ[key.strip()] = value.strip()
                             
             # Load exchange credentials from environment
             for exchange_name, exchange_config in self.exchanges.items():

@@ -1,4 +1,4 @@
-# UOTA Elite v2 - Dependencies
+# UOTA Elite v2 - 24/7 Cloud Operation Dependencies
 # Core Framework
 crewai>=0.75.0
 crewai-tools>=0.17.0
@@ -7,16 +7,12 @@ langchain-community>=0.3.5
 langgraph>=0.2.45
 
 # Trading & Exchange Integration
-ccxt>=4.3.80
 pandas>=2.2.3
 numpy>=1.26.48
-pandas-ta
+pandas-ta>=0.3.14b0
 # Technical Analysis & ML
 scikit-learn>=1.5.2
-tensorflow>=2.17.0
-torch>=2.5.1
 freqtrade>=2024.10
-stable-baselines3>=2.4.0
 
 # Data & Database
 sqlalchemy>=2.0.36
@@ -25,18 +21,11 @@ aiofiles>=24.1.0
 asyncio
 schedule>=1.2.2
 
-# Dashboard & Visualization
-streamlit>=1.40.1
-plotly>=5.24.1
-altair>=5.4.1
-streamlit-extras>=0.4.0
-streamlit-elements>=0.1.0
-
-# Telegram Integration
+# Telegram Integration (Phone C2)
 python-telegram-bot>=21.6
 aiogram>=3.13.1
 
-# API & Networking
+# API & Networking - High Performance
 aiohttp>=3.11.2
 requests>=2.32.3
 websockets>=13.1
@@ -58,42 +47,20 @@ pytz>=2024.2
 pyyaml>=6.0.2
 toml>=0.10.2
 
-# Testing & Development
-pytest>=8.3.3
-pytest-asyncio>=0.24.0
-black>=24.10.0
-flake8>=7.1.1
-mypy>=1.13.0
-
-# Performance & Optimization
+# Performance & Optimization - Zero Latency
 numba>=0.60.0
 cython>=3.0.11
+uvloop>=0.21.0
 
-# Security & Encryption
+# Security & Encryption - Military Grade
 cryptography>=44.0.0
 bcrypt>=4.2.1
+pywin32>=308
 
-# Monitoring & Metrics
+# Monitoring & Metrics - 24/7 Operation
 prometheus-client>=0.20.0
 psutil>=6.1.0
-
-# Docker & Deployment
-gunicorn>=23.0.0
-uvicorn>=0.32.0
-
-# Additional Trading Libraries
-vectorbt>=0.26.0
-backtesting>=0.3.3
-zipline-reloaded>=3.0.4
-
-# News & Sentiment Analysis
-newspaper3k==0.2.8
-textblob==0.17.1
-vaderSentiment==3.3.2
-
-# On-chain Data (optional)
-pandas-ta
-ccxt>=4.3.80
+winshell>=0.6
 
 # Mathematical & Statistical
 scipy==1.14.1
@@ -103,11 +70,7 @@ arch==7.0.0
 # Image Processing (for chart analysis)
 opencv-python==4.10.0.84
 pillow==10.4.0
-
-# Natural Language Processing
-transformers==4.46.2
-tokenizers==0.20.3
-spacy==3.8.2
+matplotlib>=3.9.2
 
 # Async Support
 asyncpg==0.30.0
@@ -116,3 +79,22 @@ redis==5.2.0
 # Rate Limiting
 ratelimit==2.2.1
 slowapi==0.1.9
+
+# Windows Specific - VPS Operation
+pywin32>=308
+winshell>=0.6
+wmi>=1.5.1
+
+# Process Management
+psutil>=6.1.0
+procfs>=0.9.0
+
+# Network Optimization
+aiofiles>=24.1.0
+orjson>=3.10.11
+msgpack>=1.1.0
+
+# System Monitoring
+GPUtil>=1.4.0
+py-cpuinfo>=9.0.0
+py-smbios>=0.4.0

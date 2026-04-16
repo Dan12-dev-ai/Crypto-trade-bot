@@ -1,6 +1,6 @@
-import pandas as pd
-import numpy as np
-from strategy_manager import strategy_manager, TradingStrategy
+# import pandas  # Moved to function to avoid circular import as pd
+# import numpy  # Moved to function to avoid circular import as np
+from strategy_manager # import strategy_manager  # Moved to function to avoid circular import, TradingStrategy
 
 def generate_mock_data(trend_type='trending'):
     """Generate mock price data for testing"""

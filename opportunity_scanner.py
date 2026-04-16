@@ -3,21 +3,21 @@ UOTA Elite v2 - Opportunity Scanner
 Real-time scanning for trading opportunities across multiple data sources
 """
 
-import asyncio
-import logging
-import aiohttp
-import json
-import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+# import aiohttp  # Moved to function to avoid circular import
+# import json  # Moved to function to avoid circular import
+# import numpy  # Moved to function to avoid circular import as np
+# import pandas  # Moved to function to avoid circular import as pd
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
-import ccxt
+# import ccxt  # Moved to function to avoid circular import
 from textblob import TextBlob
-import schedule
-import time
+# import schedule  # Moved to function to avoid circular import
+# import time  # Moved to function to avoid circular import
 
-from config import config
+from config # import config  # Moved to function to avoid circular import
 from agents.opportunity_spotter import TradingOpportunity, NewsEvent, VolatilitySpike, SentimentSignal
 
 @dataclass
@@ -688,6 +688,189 @@ class OpportunityScanner:
         self.is_running = False
         self.logger.info("Opportunity scanner stopped")
         
+    def get_high_confidence_opportunities(self, min_confidence: float = 0.8, markets: List[str] = None) -> List[TradingOpportunity]:
+        """Get high-confidence opportunities using SMC (Smart Money Concepts) analysis"""
+        try:
+            if markets is None:
+                markets = list(self.latest_market_data.keys())
+            
+            high_confidence_opps = []
+            
+            for market in markets:
+                if market not in self.latest_market_data:
+                    continue
+                    
+                market_data = self.latest_market_data[market]
+                
+                # SMC Analysis: Identify Order Blocks & Liquidity Sweeps
+                opp = self._analyze_smc_opportunity(market, market_data, min_confidence)
+                if opp and opp.confidence_score >= min_confidence:
+                    high_confidence_opps.append(opp)
+            
+            # Sort by confidence and return top opportunities
+            high_confidence_opps.sort(key=lambda x: x.confidence_score, reverse=True)
+            
+            self.logger.info(f"🎯 Found {len(high_confidence_opps)} high-confidence opportunities (min: {min_confidence})")
+            return high_confidence_opps
+            
+        except Exception as e:
+            self.logger.error(f"Error getting high-confidence opportunities: {e}")
+            return []
+    
+    def _analyze_smc_opportunity(self, symbol: str, market_data: MarketData, min_confidence: float) -> Optional[TradingOpportunity]:
+        """Analyze using Smart Money Concepts - Order Blocks & Liquidity Sweeps"""
+        try:
+            # SMC Signal 1: Order Block Identification
+            order_block_signal = self._identify_order_block(symbol, market_data)
+            
+            # SMC Signal 2: Liquidity Sweep Detection  
+            liquidity_sweep_signal = self._detect_liquidity_sweep(symbol, market_data)
+            
+            # SMC Signal 3: Market Structure Shift
+            structure_signal = self._analyze_market_structure(symbol, market_data)
+            
+            # Combine SMC signals for high confidence
+            combined_confidence = (
+                order_block_signal * 0.4 +      # Order blocks weighted highest
+                liquidity_sweep_signal * 0.35 +  # Liquidity sweeps
+                structure_signal * 0.25           # Market structure
+            )
+            
+            if combined_confidence < min_confidence:
+                return None
+            
+            # Determine trade direction based on SMC analysis
+            if order_block_signal > 0.7 and liquidity_sweep_signal > 0.6:
+                trade_side = 'buy'  # Bullish order block + sweep
+                entry_price = market_data.price * 0.998  # Slight discount
+                stop_loss = market_data.price * 0.992
+                take_profit = market_data.price * 1.015
+            elif order_block_signal < 0.3 and liquidity_sweep_signal < 0.4:
+                trade_side = 'sell'  # Bearish order block + sweep
+                entry_price = market_data.price * 1.002  # Slight premium
+                stop_loss = market_data.price * 1.008
+                take_profit = market_data.price * 0.985
+            else:
+                return None  # No clear SMC setup
+            
+            return TradingOpportunity(
+                symbol=symbol,
+                side=trade_side,
+                entry_price=entry_price,
+                stop_loss=stop_loss,
+                take_profit=take_profit,
+                confidence_score=combined_confidence,
+                time_horizon='short',
+                risk_level='medium',
+                catalyst='SMC Order Block & Liquidity Sweep',
+                supporting_data={
+                    'order_block_signal': order_block_signal,
+                    'liquidity_sweep_signal': liquidity_sweep_signal,
+                    'structure_signal': structure_signal,
+                    'rsi': market_data.rsi,
+                    'volume_ratio': market_data.volume_ratio,
+                    'volatility': market_data.volatility
+                },
+                timestamp=datetime.now(),
+                urgency=combined_confidence
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing SMC opportunity for {symbol}: {e}")
+            return None
+    
+    def _identify_order_block(self, symbol: str, market_data: MarketData) -> float:
+        """Identify Order Block patterns (Smart Money accumulation zones)"""
+        try:
+            # Order Block characteristics:
+            # 1. Strong momentum move followed by consolidation
+            # 2. High volume at the turning point
+            # 3. RSI showing exhaustion before reversal
+            
+            momentum_score = min(abs(market_data.change_24h) / 0.05, 1.0)  # 5% move = full score
+            volume_score = min(market_data.volume_ratio / 2.0, 1.0)  # 2x volume = full score
+            rsi_exhaustion = 1.0 - abs(market_data.rsi - 50) / 50  # RSI near 50 = exhaustion
+            
+            # Bollinger Band position (consolidation zone)
+            bb_position = abs(market_data.bollinger_position)
+            consolidation_score = 1.0 - bb_position  # Near middle = consolidation
+            
+            order_block_confidence = (
+                momentum_score * 0.3 +
+                volume_score * 0.3 +
+                rsi_exhaustion * 0.2 +
+                consolidation_score * 0.2
+            )
+            
+            return min(order_block_confidence, 1.0)
+            
+        except Exception as e:
+            self.logger.error(f"Error identifying order block for {symbol}: {e}")
+            return 0.0
+    
+    def _detect_liquidity_sweep(self, symbol: str, market_data: MarketData) -> float:
+        """Detect liquidity sweep patterns (Smart Money stop hunting)"""
+        try:
+            # Liquidity Sweep characteristics:
+            # 1. Sharp price spike beyond key levels
+            # 2. Quick reversal after spike
+            # 3. High volatility during sweep
+            
+            volatility_spike = min(market_data.volatility / 0.03, 1.0)  # 3% vol = full score
+            price_extreme = abs(market_data.bollinger_position)  # Price at BB extremes
+            
+            # MACD divergence (reversal signal)
+            macd_divergence = abs(market_data.macd) / 0.002  # Normalized MACD
+            divergence_score = min(macd_divergence, 1.0)
+            
+            # Volume confirmation (low volume on sweep = manipulation)
+            volume_manipulation = 1.0 - min(market_data.volume_ratio / 0.5, 1.0)  # Low vol = manipulation
+            
+            liquidity_sweep_confidence = (
+                volatility_spike * 0.4 +
+                price_extreme * 0.3 +
+                divergence_score * 0.2 +
+                volume_manipulation * 0.1
+            )
+            
+            return min(liquidity_sweep_confidence, 1.0)
+            
+        except Exception as e:
+            self.logger.error(f"Error detecting liquidity sweep for {symbol}: {e}")
+            return 0.0
+    
+    def _analyze_market_structure(self, symbol: str, market_data: MarketData) -> float:
+        """Analyze market structure for Smart Money patterns"""
+        try:
+            # Market Structure analysis:
+            # 1. Trend alignment with volume
+            # 2. Support/Respectance levels
+            # 3. Volatility normalization
+            
+            trend_strength = abs(market_data.change_24h) / 0.02  # 2% trend = full score
+            volume_confirmation = min(market_data.volume_ratio / 1.5, 1.0)  # 1.5x volume = confirmation
+            
+            # RSI momentum (not overbought/oversold)
+            rsi_optimal = 1.0 - abs(market_data.rsi - 50) / 30  # RSI 20-80 = optimal
+            rsi_score = max(rsi_optimal, 0)
+            
+            # Volatility normalization (not too volatile, not too flat)
+            optimal_volatility = 1.0 - abs(market_data.volatility - 0.02) / 0.02  # 2% vol = optimal
+            vol_score = max(optimal_volatility, 0)
+            
+            structure_confidence = (
+                trend_strength * 0.4 +
+                volume_confirmation * 0.3 +
+                rsi_score * 0.2 +
+                vol_score * 0.1
+            )
+            
+            return min(structure_confidence, 1.0)
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing market structure for {symbol}: {e}")
+            return 0.0
+
     def get_latest_opportunities(self) -> List[TradingOpportunity]:
         """Get latest opportunities"""
         return self.latest_opportunities

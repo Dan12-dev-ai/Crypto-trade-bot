@@ -1,0 +1,101 @@
+# UOTA Elite v2 - Autonomous Quant Operating System
+# World-First Multi-Agent Trading OS with Institutional Security
+FROM python:3.11-slim
+
+# Set metadata
+LABEL maintainer="UOTA Elite v2 Team"
+LABEL description="UOTA Elite v2 - Autonomous Quant Operating System"
+LABEL version="2.0.0"
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    TZ=UTC \
+    DEBIAN_FRONTEND=noninteractive \
+    OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434} \
+    CHROMA_HOST=${CHROMA_HOST:-chroma} \
+    CHROMA_PORT=${CHROMA_PORT:-8000} \
+    REDIS_URL=${REDIS_URL:-redis://redis:6379} \
+    POSTGRES_URL=${POSTGRES_URL:-postgresql://uota_user:${POSTGRES_PASSWORD}@postgres:5432/uota_trading} \
+    RABBITMQ_URL=${RABBITMQ_URL:-amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/uota_vhost} \
+    LOG_LEVEL=${LOG_LEVEL:-INFO} \
+    PRODUCTION_MODE=${PRODUCTION_MODE:-false} \
+    SECURITY_LEVEL=${SECURITY_LEVEL:-HIGH}
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    git \
+    gcc \
+    g++ \
+    make \
+    pkg-config \
+    libffi-dev \
+    libssl-dev \
+    libpq-dev \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ta-lib dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    && wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz \
+    && tar -xzf ta-lib-0.4.0-src.tar.gz \
+    && cd ta-lib/ \
+    && ./configure --prefix=/usr \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf ta-lib* \
+    && apt-get remove -y wget \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (for better layer caching)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p \
+    data/vector_memory \
+    data/security \
+    data/research \
+    data/consensus \
+    logs \
+    monitoring/grafana/dashboards \
+    monitoring/grafana/datasources \
+    nginx/conf.d \
+    nginx/ssl \
+    database
+
+# Set permissions for data directories
+RUN chmod 755 data logs && \
+    chmod 700 data/security && \
+    chmod 755 data/vector_memory data/research data/consensus
+
+# Create non-root user for security
+RUN groupadd -r uota && useradd -r -g uota uota && \
+    chown -R uota:uota /app
+
+# Switch to non-root user
+USER uota
+
+# Expose ports
+EXPOSE 8501 8080 9090
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Default command
+CMD ["python", "main_orchestrator.py"]

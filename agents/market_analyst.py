@@ -3,21 +3,21 @@ Crypto trade bot - Market Analyst Agent
 Technical analysis + FinRL-style reinforcement learning signals
 """
 
-import asyncio
-import logging
-import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+# import numpy  # Moved to function to avoid circular import as np
+# import pandas  # Moved to function to avoid circular import as pd
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
-import talib
+# import talib  # Moved to function to avoid circular import
 from sklearn.preprocessing import MinMaxScaler
-import torch
-import torch.nn as nn
+# # import torch  # Moved to function to avoid circular import  # Moved to function to avoid circular import
+# # import torch  # Moved to function to avoid circular import  # Moved to function to avoid circular import.nn as nn
 
 from crewai import Agent, Task
-from langchain.llms.base import LLM
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.llms import Ollama
+from langchain_core.messages import HumanMessage, SystemMessage
 
 @dataclass
 class TechnicalSignal:
@@ -46,7 +46,7 @@ class MLSignal:
 class MarketAnalystAgent:
     """Market Analyst Agent - Technical analysis and ML signals"""
     
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: Ollama):
         self.llm = llm
         self.logger = logging.getLogger(__name__)
         self.scaler = MinMaxScaler()

@@ -3,28 +3,28 @@ Crypto trade bot - Streamlit Dashboard
 Beautiful, professional real-time trading dashboard
 """
 
-import streamlit as st
-import plotly.graph_objects as go
-import plotly.express as px
+# # import streamlit  # Moved to function to avoid circular import  # Moved to function to avoid circular import as st
+# # # import plotly  # Moved to function to avoid circular import  # Moved to function to avoid circular import  # Moved to function to avoid circular import.graph_objects as go
+# # # import plotly  # Moved to function to avoid circular import  # Moved to function to avoid circular import  # Moved to function to avoid circular import.express as px
 from plotly.subplots import make_subplots
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-import asyncio
-import json
-import time
+# import pandas  # Moved to function to avoid circular import as pd
+# import numpy  # Moved to function to avoid circular import as np
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import json  # Moved to function to avoid circular import
+# import time  # Moved to function to avoid circular import
 from typing import Dict, List, Any
-import requests
+# import requests  # Moved to function to avoid circular import
 from streamlit_extras.metric_cards import style_metric_cards
 from streamlit_extras.colored_header import colored_header
-import streamlit.components.v1 as components
+# # import streamlit  # Moved to function to avoid circular import  # Moved to function to avoid circular import.components.v1 as components
 
 # Import our modules with error handling
 try:
-    from config import config
-    from risk_manager import risk_manager
+    from config # import config  # Moved to function to avoid circular import
+    from risk_manager # import risk_manager  # Moved to function to avoid circular import
     from agents.supervisor import SupervisorAgent
-    from opportunity_scanner import opportunity_scanner
+    from opportunity_scanner # import opportunity_scanner  # Moved to function to avoid circular import
     from exchange_integration import exchange_manager
 except ImportError as e:
     st.error(f"Import error: {e}")

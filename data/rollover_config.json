@@ -1,0 +1,30 @@
+{
+  "mission_logic": {
+    "risk_rule_percent": 1.0,
+    "smc_confidence_threshold": 0.7,
+    "max_daily_trades": 10,
+    "skill_score_threshold": 95.0,
+    "auto_renewal_enabled": true
+  },
+  "rollover_history": [
+    {
+      "timestamp": "2026-04-06T09:32:43.263978",
+      "type": "AUTO_ROLLOVER",
+      "old_mission": 1,
+      "new_mission": 2,
+      "target": 4000,
+      "reason": "30-day auto-renewal"
+    },
+    {
+      "timestamp": "2026-04-06T09:40:33.607839",
+      "type": "AUTO_ROLLOVER",
+      "old_mission": 1,
+      "new_mission": 2,
+      "target": 4000,
+      "reason": "30-day auto-renewal"
+    }
+  ],
+  "last_rollover_date": "2026-04-06T09:40:33.607839",
+  "logic_locked": true,
+  "auto_renewal_enabled": true
+}

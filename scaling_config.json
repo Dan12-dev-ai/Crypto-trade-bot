@@ -1,0 +1,88 @@
+{
+  "scaling_configuration": {
+    "version": "2.0",
+    "created": "2026-04-01",
+    "description": "UOTA Elite v2 Professional Scaling Configuration",
+    "risk_management": {
+      "max_risk_per_trade": 0.01,
+      "max_daily_loss": 0.05,
+      "max_drawdown": 0.20,
+      "emergency_stop_drawdown": 0.15,
+      "leverage_limits": {
+        "XAUUSD": 500,
+        "forex_pairs": 500
+      }
+    },
+    "scaling_targets": {
+      "current_balance": 500.0,
+      "target_balance": 4000.0,
+      "scaling_phases": [
+        {
+          "phase": "Initial",
+          "balance_range": [500, 1000],
+          "max_position_size": 0.01,
+          "daily_trades_limit": 5
+        },
+        {
+          "phase": "Growth",
+          "balance_range": [1000, 2000],
+          "max_position_size": 0.02,
+          "daily_trades_limit": 8
+        },
+        {
+          "phase": "Expansion",
+          "balance_range": [2000, 4000],
+          "max_position_size": 0.05,
+          "daily_trades_limit": 12
+        },
+        {
+          "phase": "Elite",
+          "balance_range": [4000, 10000],
+          "max_position_size": 0.1,
+          "daily_trades_limit": 20
+        }
+      ]
+    },
+    "lot_size_calculation": {
+      "method": "fixed_risk_percentage",
+      "risk_percentage": 0.01,
+      "pip_values": {
+        "XAUUSD": 100.0,
+        "EURUSD": 10.0,
+        "GBPUSD": 10.0,
+        "USDJPY": 10.0,
+        "AUDUSD": 10.0,
+        "USDCAD": 10.0,
+        "NZDUSD": 10.0,
+        "USDCHF": 10.0
+      },
+      "minimum_lot_size": 0.01,
+      "maximum_lot_size": 5.0,
+      "lot_size_steps": [0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0, 2.0, 3.0, 5.0]
+    },
+    "performance_metrics": {
+      "skill_score_threshold": 95.0,
+      "win_rate_target": 70.0,
+      "sharpe_ratio_target": 1.5,
+      "max_consecutive_losses": 5,
+      "monthly_profit_target": 10.0
+    },
+    "elite_symbols": [
+      "XAUUSD",
+      "EURUSD",
+      "GBPUSD",
+      "USDJPY",
+      "AUDUSD",
+      "USDCAD",
+      "NZDUSD",
+      "USDCHF"
+    ],
+    "smc_parameters": {
+      "order_block_threshold": 0.75,
+      "liquidity_sweep_threshold": 0.70,
+      "market_structure_threshold": 0.65,
+      "rsi_threshold": 0.60,
+      "minimum_confidence": 0.80
+    }
+  }
+}

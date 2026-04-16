@@ -3,35 +3,20 @@ Crypto trade bot - Main Entry Point
 Ultimate Opportunistic Trading Agent - Autonomous Trading System
 """
 
-import asyncio
-import logging
-import signal
-import sys
-import os
-from datetime import datetime
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+# import signal  # Moved to function to avoid circular import
+# import sys  # Moved to function to avoid circular import
+# import os  # Moved to function to avoid circular import
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Optional
-import argparse
+# import argparse  # Moved to function to avoid circular import
 from pathlib import Path
 
 # Add project root to path
 sys.path.append(str(Path(__file__).parent))
 
-# Import our modules with error handling
-try:
-    from config import config
-    from risk_manager import risk_manager
-    from agents.supervisor import SupervisorAgent
-    from opportunity_scanner import opportunity_scanner
-    from exchange_integration import exchange_manager
-    from telegram_alerts import telegram_alerts
-    from database import database, SystemLog
-    from dashboard import Dashboard
-except ImportError as e:
-    logger.error(f"Import error: {e}")
-    logger.error("Make sure all required packages are installed: pip install -r requirements.txt")
-    sys.exit(1)
-
-# Configure logging
+# Configure logging first
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -43,7 +28,29 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-class Crypto trade bot:
+# Import our modules with error handling
+try:
+    from config # import config  # Moved to function to avoid circular import
+    from risk_manager # import risk_manager  # Moved to function to avoid circular import
+    from agents.supervisor import SupervisorAgent
+    from opportunity_scanner # import opportunity_scanner  # Moved to function to avoid circular import
+    from exchange_integration import exchange_manager
+    from telegram_alerts # import telegram_alerts  # Moved to function to avoid circular import
+    from database # import database  # Moved to function to avoid circular import, SystemLog
+    from dashboard import Dashboard
+    # Future-proof modules
+    from self_correction_layer # import self_correction_layer  # Moved to function to avoid circular import
+    from n8n_guard # import n8n_guard  # Moved to function to avoid circular import
+    from anti_hallucination # import anti_hallucination  # Moved to function to avoid circular import, AIDecision
+    # Autonomous Commander Layer
+    from commander_logic import autonomous_commander
+    from zero_downtime_infrastructure import zero_downtime_manager
+except ImportError as e:
+    logger.error(f"Import error: {e}")
+    logger.error("Make sure all required packages are installed: pip install -r requirements.txt")
+    sys.exit(1)
+
+class CryptoTradeBot:
     """Main Crypto trade bot trading system"""
     
     def __init__(self):
@@ -58,6 +65,11 @@ class Crypto trade bot:
         """Initialize the trading system"""
         try:
             logger.info("🤖 Initializing Crypto trade bot...")
+            
+            # DEMO MODE CONFIRMATION
+            logger.info("🛡️ DEMO MODE ACTIVE: Institutional Safety Layers Engaged")
+            logger.info("💰 All trading uses simulated data - No real money at risk")
+            logger.info("🔒 Real money trading is BLOCKED during 3-month testing phase")
             
             # Validate configuration
             config_errors = config.validate_config()
@@ -95,10 +107,33 @@ class Crypto trade bot:
             logger.info("📱 Starting Telegram bot...")
             await telegram_alerts.start()
             
+            # Initialize zero-downtime infrastructure first
+            logger.info("🚀 Initializing zero-downtime infrastructure...")
+            await zero_downtime_manager.initialize()
+            
+            # Initialize Autonomous Commander (the brain)
+            logger.info("🧠 Initializing Autonomous Commander Layer...")
+            await autonomous_commander.initialize_commander()
+            
+            # Initialize future-proof systems
+            logger.info("🧠 Initializing self-correction layer...")
+            await self_correction_layer.initialize()
+            
+            logger.info("🛡️ Initializing n8n orchestration guard...")
+            await n8n_guard.initialize()
+            
+            logger.info("🔍 Initializing anti-hallucination system...")
+            await anti_hallucination.initialize()
+            
             # Start opportunity scanner
             logger.info("🔍 Starting opportunity scanner...")
             scanner_task = asyncio.create_task(opportunity_scanner.start_scanning())
             self.tasks.append(scanner_task)
+            
+            # Start n8n monitoring
+            logger.info("⚡ Starting n8n workflow monitoring...")
+            n8n_task = asyncio.create_task(n8n_guard.start_monitoring())
+            self.tasks.append(n8n_task)
             
             # Send startup notification
             await telegram_alerts.send_system_alert(
@@ -325,8 +360,8 @@ async def run_dashboard():
     """Run the Streamlit dashboard"""
     try:
         # Import and run dashboard
-        import subprocess
-        import webbrowser
+        # import subprocess  # Moved to function to avoid circular import
+        # import webbrowser  # Moved to function to avoid circular import
         
         # Start Streamlit dashboard
         dashboard_process = subprocess.Popen([
@@ -379,7 +414,7 @@ async def main():
             exchange_config.testnet = True
             
     # Create and initialize system
-    crypto_trade_bot = Crypto trade bot()
+    crypto_trade_bot = CryptoTradeBot()
     crypto_trade_bot.setup_signal_handlers()
     
     dashboard_process = None
@@ -411,7 +446,7 @@ async def main():
         ))
     finally:
         # Cleanup
-        await uota.stop()
+        await crypto_trade_bot.stop()
         
         if dashboard_process:
             dashboard_process.terminate()

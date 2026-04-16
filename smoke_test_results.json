@@ -1,0 +1,82 @@
+{
+  "overall_status": "CRITICAL",
+  "total_tests": 10,
+  "passed": 3,
+  "failed": 5,
+  "warnings": 2,
+  "success_rate": 30.0,
+  "execution_time": 8.633854,
+  "timestamp": "2026-04-16T15:18:15.921010",
+  "results": [
+    {
+      "component": "System Files",
+      "status": "PASS",
+      "message": "All 9 required files present",
+      "execution_time": 0.00033926963806152344,
+      "timestamp": "2026-04-16T15:18:07.287543"
+    },
+    {
+      "component": "Configuration",
+      "status": "WARN",
+      "message": "Missing env vars: ['EXCHANGE_API_KEY', 'TELEGRAM_BOT_TOKEN', 'POSTGRES_PASSWORD', 'RABBITMQ_USER', 'RABBITMQ_PASSWORD']",
+      "execution_time": 0.00016236305236816406,
+      "timestamp": "2026-04-16T15:18:07.288219"
+    },
+    {
+      "component": "Dependencies",
+      "status": "PASS",
+      "message": "All required packages available, 5 optional packages",
+      "execution_time": 5.125809192657471,
+      "timestamp": "2026-04-16T15:18:12.414699"
+    },
+    {
+      "component": "Security",
+      "status": "WARN",
+      "message": "Insecure file permissions: ['.env']",
+      "execution_time": 0.00020551681518554688,
+      "timestamp": "2026-04-16T15:18:12.414960"
+    },
+    {
+      "component": "Memory System",
+      "status": "FAIL",
+      "message": "Syntax error in memory module: No module named 'ta'",
+      "execution_time": 1.0903635025024414,
+      "timestamp": "2026-04-16T15:18:13.505374"
+    },
+    {
+      "component": "Consensus Engine",
+      "status": "FAIL",
+      "message": "Syntax error in consensus engine: No module named 'ta'",
+      "execution_time": 0.9414525032043457,
+      "timestamp": "2026-04-16T15:18:14.446915"
+    },
+    {
+      "component": "Digital Twin",
+      "status": "FAIL",
+      "message": "Syntax error in digital twin: No module named 'ta'",
+      "execution_time": 1.1472508907318115,
+      "timestamp": "2026-04-16T15:18:15.594219"
+    },
+    {
+      "component": "Research Lab",
+      "status": "FAIL",
+      "message": "Syntax error in research lab: No module named 'arxiv'",
+      "execution_time": 0.2254176139831543,
+      "timestamp": "2026-04-16T15:18:15.819704"
+    },
+    {
+      "component": "Orchestrator",
+      "status": "FAIL",
+      "message": "Syntax error in orchestrator: No module named 'ta'",
+      "execution_time": 0.0032651424407958984,
+      "timestamp": "2026-04-16T15:18:15.823041"
+    },
+    {
+      "component": "Deployment",
+      "status": "PASS",
+      "message": "Deployment configuration OK",
+      "execution_time": 0.09750509262084961,
+      "timestamp": "2026-04-16T15:18:15.920774"
+    }
+  ]
+}

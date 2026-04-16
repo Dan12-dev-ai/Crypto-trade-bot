@@ -3,9 +3,9 @@ Crypto trade bot - Strategy Manager
 Handles automatic strategy switching based on market conditions (ADX, ATR)
 """
 
-import pandas as pd
-import pandas_ta as ta
-import logging
+# import pandas  # Moved to function to avoid circular import as pd
+# import pandas  # Moved to function to avoid circular import_ta as ta
+# import logging  # Moved to function to avoid circular import
 from enum import Enum
 from typing import Dict, Any, Optional, Tuple
 

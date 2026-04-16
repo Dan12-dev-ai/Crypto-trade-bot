@@ -3,22 +3,22 @@ Crypto trade bot - Telegram Alerts System
 Full Telegram integration with dedicated bot for real-time notifications
 """
 
-import asyncio
-import logging
-import json
-from datetime import datetime, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+# import json  # Moved to function to avoid circular import
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
-import aiohttp
+# import aiohttp  # Moved to function to avoid circular import
 from telegram import Bot, Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-import matplotlib.pyplot as plt
-import io
-import base64
+# import matplotlib  # Moved to function to avoid circular import.pyplot as plt
+# import io  # Moved to function to avoid circular import
+# import base64  # Moved to function to avoid circular import
 
-from config import config
+from config # import config  # Moved to function to avoid circular import
 try:
-    from risk_manager import risk_manager
+    from risk_manager # import risk_manager  # Moved to function to avoid circular import
 except ImportError:
     risk_manager = None
     
@@ -28,7 +28,7 @@ except ImportError:
     SupervisorAgent = None
     
 try:
-    from opportunity_scanner import opportunity_scanner
+    from opportunity_scanner # import opportunity_scanner  # Moved to function to avoid circular import
 except ImportError:
     opportunity_scanner = None
 

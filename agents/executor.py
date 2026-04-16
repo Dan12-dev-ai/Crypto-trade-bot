@@ -3,21 +3,21 @@ Crypto trade bot - Executor Agent
 Places orders with correct leverage, manages SL/TP/trailing stops
 """
 
-import asyncio
-import logging
-from datetime import datetime, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
 from enum import Enum
-import ccxt
-import numpy as np
+# import ccxt  # Moved to function to avoid circular import
+# import numpy  # Moved to function to avoid circular import as np
 
 from crewai import Agent, Task
-from langchain.llms.base import LLM
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.llms import Ollama
+from langchain_core.messages import HumanMessage, SystemMessage
 
-from config import config
-from risk_manager import risk_manager
+from config # import config  # Moved to function to avoid circular import
+from risk_manager # import risk_manager  # Moved to function to avoid circular import
 
 class OrderType(Enum):
     """Order types"""
@@ -80,7 +80,7 @@ class Position:
 class ExecutorAgent:
     """Executor Agent - Handles order execution and position management"""
     
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: Ollama):
         self.llm = llm
         self.logger = logging.getLogger(__name__)
         

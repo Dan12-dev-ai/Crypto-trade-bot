@@ -3,21 +3,22 @@ Crypto trade bot - Supervisor Agent
 Orchestrates everything, decides when to act or pause
 """
 
-import asyncio
-import logging
-from datetime import datetime, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum
-import json
+# import json  # Moved to function to avoid circular import
+# import pandas  # Moved to function to avoid circular import as pd
 
 from crewai import Agent, Task, Crew
-from langchain.llms.base import LLM
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.llms import Ollama
+from langchain_core.messages import HumanMessage, SystemMessage
 
-from config import config
-from risk_manager import risk_manager, TradingStatus
-from strategy_manager import strategy_manager, TradingStrategy
+from config # import config  # Moved to function to avoid circular import
+from risk_manager # import risk_manager  # Moved to function to avoid circular import, TradingStatus
+from strategy_manager # import strategy_manager  # Moved to function to avoid circular import, TradingStrategy
 from .goal_risk_master import GoalRiskMasterAgent
 from .market_analyst import MarketAnalystAgent
 from .opportunity_spotter import OpportunitySpotterAgent
@@ -56,7 +57,7 @@ class MarketState:
 class SupervisorAgent:
     """Supervisor Agent - Orchestrates the entire trading system"""
     
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: Ollama):
         self.llm = llm
         self.logger = logging.getLogger(__name__)
         

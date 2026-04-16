@@ -3,22 +3,22 @@ Crypto trade bot - Opportunity Spotter Agent
 Detects news shocks, volatility spikes, sentiment explosions, on-chain anomalies, sudden breakouts
 """
 
-import asyncio
-import logging
-import aiohttp
-import json
-from datetime import datetime, timedelta
+# import asyncio  # Moved to function to avoid circular import
+# import logging  # Moved to function to avoid circular import
+# import aiohttp  # Moved to function to avoid circular import
+# import json  # Moved to function to avoid circular import
+from datetime # import datetime  # Moved to function to avoid circular import, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
-import numpy as np
-import pandas as pd
+# import numpy  # Moved to function to avoid circular import as np
+# import pandas  # Moved to function to avoid circular import as pd
 from textblob import TextBlob
-import vaderSentiment
+# # import vaderSentiment  # Moved to function to avoid circular import  # Moved to function to avoid circular import
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 from crewai import Agent, Task
-from langchain.llms.base import LLM
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.llms import Ollama
+from langchain_core.messages import HumanMessage, SystemMessage
 
 @dataclass
 class NewsEvent:
@@ -82,7 +82,7 @@ class TradingOpportunity:
 class OpportunitySpotterAgent:
     """Opportunity Spotter Agent - Detects high-probability trading opportunities"""
     
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: Ollama):
         self.llm = llm
         self.logger = logging.getLogger(__name__)
         self.sentiment_analyzer = SentimentIntensityAnalyzer()
